@@ -8,11 +8,11 @@ defmodule Bencoder.Decode do
 
   defp decode_element(chars) do
     case hd(chars) do
-      105 -> # i
+      ?i ->
         decode_integer(chars)
-      108 -> # l
+      ?l ->
         decode_list(chars)
-      100 -> # d
+      ?d ->
         decode_dictionary(chars)
       _ ->
         decode_string(chars)
@@ -20,7 +20,7 @@ defmodule Bencoder.Decode do
   end
 
   defp decode_integer(chars) do
-    digits = Enum.take_while(tl(chars), fn (x) -> x != 101 end) # e
+    digits = Enum.take_while(tl(chars), fn (x) -> x != ?e end)
     {number, _} = ('0' ++ digits) |> to_string |> Integer.parse
     {:ok, number, Enum.drop(chars, 2 + length(digits))}
   end
@@ -31,7 +31,7 @@ defmodule Bencoder.Decode do
 
   defp decode_list_elements(chars, z) do
     case hd(chars) do
-      101 ->
+      ?e ->
         {:ok, z, tl(chars)}
       _ ->
         {:ok, decoded, remaining} = decode_element(chars)
@@ -45,7 +45,7 @@ defmodule Bencoder.Decode do
 
   defp decode_dictionary_elements(chars, map) do
     case hd(chars) do
-      101 ->
+      ?e ->
         {:ok, map, tl(chars)}
       _ ->
         {:ok, decoded_key, remaining} = decode_element(chars)
@@ -55,7 +55,7 @@ defmodule Bencoder.Decode do
   end
 
   defp decode_string(chars) do
-    digits = Enum.take_while(chars, fn (x) -> x != 58 end)
+    digits = Enum.take_while(chars, fn (x) -> x != ?: end)
     {s, _} = digits |> to_string |> Integer.parse
     word = Enum.drop(chars, length(digits) + 1)
     {:ok, to_string(Enum.take(word, s)), Enum.drop(word, s)}
