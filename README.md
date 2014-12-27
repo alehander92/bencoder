@@ -1,6 +1,8 @@
 Bencoder
 ========
 
+[![Build Status](https://travis-ci.org/alehander42/bencoder.svg)](https://travis-ci.org/alehander42/bencoder)
+
 An elixir bencoding package
 
 It's intended for the [`yolandi`](https://github.com/alehander42/yolandi) torrent client
