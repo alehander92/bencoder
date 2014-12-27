@@ -2,7 +2,7 @@ defmodule Bencoder.Decode do
   @spec decode(String) :: term
   def decode(data) do
     chars = String.to_char_list(data)
-    {:ok, decoded, remaining} = decode_element(chars)
+    {:ok, decoded, _} = decode_element(chars)
     decoded
   end
 
@@ -14,7 +14,7 @@ defmodule Bencoder.Decode do
         decode_list(chars)
       100 -> # d
         decode_dictionary(chars)
-      digit ->
+      _ ->
         decode_string(chars)
     end
   end
@@ -33,7 +33,7 @@ defmodule Bencoder.Decode do
     case hd(chars) do
       101 ->
         {:ok, z, tl(chars)}
-      other ->
+      _ ->
         {:ok, decoded, remaining} = decode_element(chars)
         decode_list_elements(remaining, z ++ [decoded])
     end
@@ -47,7 +47,7 @@ defmodule Bencoder.Decode do
     case hd(chars) do
       101 ->
         {:ok, map, tl(chars)}
-      other ->
+      _ ->
         {:ok, decoded_key, remaining} = decode_element(chars)
         {:ok, decoded_value, remaining} = decode_element(remaining)
         decode_dictionary_elements(remaining, Map.put(map, decoded_key, decoded_value))

@@ -22,7 +22,7 @@ defimpl Bencoder.Encoder, for: List do
       Bencoder.Encode.encode(element)
     end
 
-    ["l", y, z, "e"] |> IO.iodata_to_binary
+    ["l", y, z, "e"] |> IO.chardata_to_string
   end
 end
 
@@ -38,7 +38,7 @@ defimpl Bencoder.Encoder, for: Map do
 
       [key, value]
     end
-    ["d", y, z, "e"] |> IO.iodata_to_binary
+    ["d", y, z, "e"] |> IO.chardata_to_string
   end
 end
 
@@ -58,13 +58,13 @@ end
 
 defimpl Bencoder.Encoder, for: Integer do
   def encode(self) do
-    ["i", to_string(self), "e"] |> IO.iodata_to_binary
+    ["i", to_string(self), "e"] |> IO.chardata_to_string
   end
 end
 
 defimpl Bencoder.Encoder, for: BitString do
   def encode(self) do
-    [to_string(String.length self), ":", self] |> IO.iodata_to_binary
+    [to_string(String.length self), ":", self] |> IO.chardata_to_string
   end
 end
 

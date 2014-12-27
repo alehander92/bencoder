@@ -8,18 +8,18 @@ defmodule DecoderTest do
   end
 
   test "decodes strings correctly" do
-  	assert Bencoder.decode("0:")   == ""
-  	assert Bencoder.decode("2:0я") == "0я"
+    assert Bencoder.decode("0:")   == ""
+    assert Bencoder.decode("2:0я") == "0я"
   end
 
   test "decodes dictionaries correctly" do
-  	assert Bencoder.decode("d4:love6:sophiae") == %{"love" => "sophia"}
-  	assert Bencoder.decode("de")               == %{}
+    assert Bencoder.decode("d4:love6:sophiae") == %{"love" => "sophia"}
+    assert Bencoder.decode("de")               == %{}
   end
 
   test "decodes lists correctly" do
-  	assert Bencoder.decode("li1992eli0ee2:48e")  == [1992, [0], "48"]
-  	assert Bencoder.decode("le")                 == []
+    assert Bencoder.decode("li1992eli0ee2:48e")  == [1992, [0], "48"]
+    assert Bencoder.decode("le")                 == []
   end
 end
 

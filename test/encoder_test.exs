@@ -9,7 +9,7 @@ defmodule EncoderTest do
   end
 
   test "encodes strings correctly" do
-    assert Bencoder.encode("") 	== "0:"
+    assert Bencoder.encode("")  == "0:"
     assert Bencoder.encode("æß")    == "2:æß"
   end
 
@@ -19,7 +19,7 @@ defmodule EncoderTest do
   end
 
   test "encodes arrays correctly" do
-  	assert Bencoder.encode([%{"e" => "zz"}, 4]) == "ld1:e2:zzei4ee"
-  	assert Bencoder.encode([])                  == "le"
+    assert Bencoder.encode([%{"e" => "zz"}, 4]) == "ld1:e2:zzei4ee"
+    assert Bencoder.encode([])                  == "le"
   end
 end
