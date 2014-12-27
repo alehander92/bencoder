@@ -7,7 +7,10 @@ It's intended for the [`yolandi`](https://github.com/alehander42/yolandi) torren
 
  **Beware**
 
- That's a learning exercise for me in elixir/erlang, so the code is still not clean and not idiomatic
+ That's a learning exercise for me in elixir/erlang, so the code is still not clean and non idiomatic
+
+ Bencode format supports 4 types of data: numbers, dictionaries and lists.
+ `Bencoder` uses elixir's `Integer`, `Map`, `List` and `BitString`.
 
  Examples:
 
