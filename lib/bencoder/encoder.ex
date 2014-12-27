@@ -68,3 +68,4 @@ defimpl Bencoder.Encoder, for: BitString do
   end
 end
 
+
