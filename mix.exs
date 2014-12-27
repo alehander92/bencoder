@@ -3,7 +3,7 @@ defmodule Bencoder.Mixfile do
 
   def project do
     [app: :bencoder,
-     version: "0.0.2",
+     version: "0.0.4",
      elixir: "~> 1.0.0",
      description: "a library to handle bencode in elixir",
      package: package,
