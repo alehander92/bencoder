@@ -1,11 +1,28 @@
 defmodule Bencoder.Decode do
-  @spec decode(String) :: term
+  @doc """
+  Decodes a binary and translates it into elixir objects.
+
+  Returns the decoded element.
+
+  `number` -> `Integer`
+  `string` -> `String`
+  `list`   -> `List`
+  `dict`   -> `Map`
+
+  """
+  @spec decode(binary) :: term
   def decode(data) do
-    chars = String.to_char_list(data)
-    {:ok, decoded, _} = decode_element(chars)
+    {:ok, decoded, _} = data |> :binary.bin_to_list |> decode_element
     decoded
   end
 
+  @doc """
+  Decodes each element and returns a list with the non-consumed input
+
+  Returns `{ :ok, element, non_consumed }`
+
+  """
+  @spec decode_element(List.binary) :: { :ok, List.t | Map.t | Integer | binary, List.binary }
   defp decode_element(chars) do
     case hd(chars) do
       ?i ->
@@ -54,10 +71,10 @@ defmodule Bencoder.Decode do
     end
   end
 
-  defp decode_string(chars) do
-    digits = Enum.take_while(chars, fn (x) -> x != ?: end)
+  defp decode_string(binary) do
+    digits = Enum.take_while(binary, fn (x) -> x != ?: end)
     {s, _} = digits |> to_string |> Integer.parse
-    word = Enum.drop(chars, length(digits) + 1)
-    {:ok, to_string(Enum.take(word, s)), Enum.drop(word, s)}
+    word = Enum.drop(binary, length(digits) + 1)
+    {:ok, :binary.list_to_bin(Enum.take(word, s)), Enum.drop(word, s)}
   end
 end

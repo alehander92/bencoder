@@ -8,8 +8,11 @@ defmodule DecoderTest do
   end
 
   test "decodes strings correctly" do
-    assert Bencoder.decode("0:")   == ""
-    assert Bencoder.decode("2:0я") == "0я"
+    assert Bencoder.decode("0:")     == ""
+    assert Bencoder.decode("3:0я")   == "0я"
+    assert Bencoder.decode("4:like") == "like"
+    assert Bencoder.decode("11:Çxa!Ù я`") == "Çxa!Ù я`"
+
   end
 
   test "decodes dictionaries correctly" do
@@ -22,4 +25,3 @@ defmodule DecoderTest do
     assert Bencoder.decode("le")                 == []
   end
 end
-

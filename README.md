@@ -24,6 +24,8 @@ It's intended for the [`yolandi`](https://github.com/alehander42/yolandi) torren
  ```elixir
  Bencoder.decode("4:life") # "life"
  Bencoder.decode("d4:lifei42ee") # %{"life" => 42}
+ Bencoder.decode("i42e") # 42
+ Bencoder.decode("l1:~e") # ["~"]
 ```
 
 
