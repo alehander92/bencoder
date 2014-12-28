@@ -52,7 +52,7 @@ end
 
 defimpl Bencoder.Encoder, for: BitString do
   def encode(self) do
-    << to_string(String.length self) :: binary, ?:, self :: binary >>
+    << (self |> byte_size |> to_string) :: binary, ?:, self :: binary >>
   end
 end
 
