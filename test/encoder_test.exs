@@ -22,4 +22,15 @@ defmodule EncoderTest do
     assert Bencoder.encode([%{"e" => "zz"}, 4]) == "ld1:e2:zzei4ee"
     assert Bencoder.encode([])                  == "le"
   end
+
+  test "encodes nested maps correctly" do
+    assert Bencoder.encode(%{"e" => []}) == "d1:elee"
+    assert Bencoder.encode(%{2 => %{"x" => [[]]}}) == "d1:2d1:xlleeee"
+  end
+
+  test "encodes binaries correctly" do
+    assert Bencoder.encode(<<>>) == "0:"
+    # assert Bencoder.encode(<<206, 165, 217, 80, 25, 72, 126, 48, 166, 224, 100, 245, 122, 33, 97, 203, 45, 207, 60, 199, 120, 97, 33, 217, 27, 248, 14, 70, 133, 76, 193, 116, 163, 151, 195, 204, 165, 80, 251, 85, 36, 130, 123, 35>>) ==
+    #                        <<?4, ?4, ?:, 206, 165, 217, 80, 25, 72, 126, 48, 166, 224, 100, 245, 122, 33, 97, 203, 45, 207, 60, 199, 120, 97, 33, 217, 27, 248, 14, 70, 133, 76, 193, 116, 163, 151, 195, 204, 165, 80, 251, 85, 36, 130, 123, 35>>
+  end
 end

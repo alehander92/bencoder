@@ -13,32 +13,20 @@ end
 
 
 defimpl Bencoder.Encoder, for: List do
-  def encode([]) do
-    "le"
-  end
-
   def encode(self) do
-    [y | z] = Enum.map self, fn element ->
+    y = Enum.map_join self, fn element ->
       Bencoder.Encode.encode(element)
     end
-
-    ["l", y, z, "e"] |> IO.chardata_to_string
+    << ?l, y :: binary, ?e >>
   end
 end
 
 defimpl Bencoder.Encoder, for: Map do
-  def encode(self) when map_size(self) == 0 do
-    "de"
-  end
-
   def encode(self) do
-    [y | z] = Enum.map self, fn { key, value } ->
-      key = Bencoder.Encode.encode(to_string(key))
-      value = Bencoder.Encode.encode(value)
-
-      [key, value]
+    y = Enum.map_join self, fn { key, value } ->
+      Bencoder.Encode.encode(to_string(key)) <> Bencoder.Encode.encode(value)
     end
-    ["d", y, z, "e"] |> IO.chardata_to_string
+    << ?d, y :: binary, ?e >>
   end
 end
 
@@ -58,13 +46,13 @@ end
 
 defimpl Bencoder.Encoder, for: Integer do
   def encode(self) do
-    ["i", to_string(self), "e"] |> IO.chardata_to_string
+    << ?i, to_string(self) :: binary, ?e >>
   end
 end
 
 defimpl Bencoder.Encoder, for: BitString do
   def encode(self) do
-    [to_string(String.length self), ":", self] |> IO.chardata_to_string
+    << to_string(String.length self) :: binary, ?:, self :: binary >>
   end
 end
 
