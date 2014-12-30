@@ -10,7 +10,7 @@ defmodule EncoderTest do
 
   test "encodes strings correctly" do
     assert Bencoder.encode("")  == "0:"
-    assert Bencoder.encode("æß")    == "4:æß"
+    assert Bencoder.encode("æß") == "4:æß"
   end
 
   test "encodes maps correctly" do

@@ -28,4 +28,18 @@ It's intended for the [`yolandi`](https://github.com/alehander42/yolandi) torren
  Bencoder.decode("l1:~e") # ["~"]
 ```
 
+## Install
+
+Add to your mix.exs deps
+
+```elixir
+{:bencoder, "~> 0.0.7"}
+```
+
+
+
+## Copyright
+
+Copyright (c) 2014 Alexander Ivanov. See [LICENSE](LICENSE) for further details
+
 
